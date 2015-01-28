@@ -1,0 +1,41 @@
+class Solution {
+public:
+    string addBinary(string a, string b) {
+        
+        long lenmax,lenmin;
+        
+        if(a.size()>=b.size()){
+            lenmax=a.size();
+            lenmin=b.size();
+            long diff=lenmax-lenmin;
+            for(long int i=0;i<diff;i++){b="0"+b;}
+        }else{
+            lenmax=b.size();
+            lenmin=a.size();
+            long diff=lenmax-lenmin;
+            for(long int i=0;i<diff;i++){a="0"+a;}
+        }
+        
+        string result="";
+        int nextdigit=0;
+        for(long i=lenmax-1;i>=0;i--){
+            int currentdigit=a[i]+b[i]-96+nextdigit;
+            switch(currentdigit){
+                case 0: result="0"+result;
+                        nextdigit=0;
+                        break;
+                case 1: result="1"+result;
+                        nextdigit=0;
+                        break;
+                case 2: result="0"+result;
+                        nextdigit=1;
+                        break;
+                case 3: result="1"+result;
+                        nextdigit=1;
+                        break;
+            }
+          }
+        if(nextdigit==1){result="1"+result;}
+        return result;
+    }
+};
