@@ -1,0 +1,29 @@
+class Solution {
+public:
+    void nextPermutation(vector<int> &num) {
+         int len=num.size();
+         if(len==0||len==1){
+             return ;
+         }else{
+                int pivot=len-2;
+                while(pivot>=0){
+                    if(num[pivot]<num[pivot+1]){
+                        break;
+                    }
+                    pivot--;
+                }
+                if(pivot==-1){
+                    reverse(num.begin(),num.end());
+                }else{
+                    int toswap=pivot+1;
+                    for(int i=pivot+2;i<len;i++){
+                        if(num[i]>num[pivot]&&num[i]<=num[toswap]){
+                            toswap=i;
+                        }
+                    }
+                    swap(num[pivot],num[toswap]);
+                    reverse(num.begin()+pivot+1,num.end());
+                }
+        }
+    }
+};
