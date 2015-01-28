@@ -1,0 +1,34 @@
+class Solution {
+public:
+    bool isPalindrome(string s) {
+        vector<char> input;
+        
+        bool ifempty=true;
+        long temp=0;
+        while(temp<s.size()){
+            if(s[temp]>=97&&s[temp]<=122){
+                s[temp]=s[temp]-32;
+                input.push_back(s[temp]);
+                ifempty=false;
+            }else if((s[temp]>=65&&s[temp]<=90)||(s[temp]>=48&&s[temp]<=57)){
+                input.push_back(s[temp]);
+                ifempty=false;
+            }
+            temp++;
+        }
+        
+        if(ifempty){
+            return true;
+        }
+        
+        bool b=true;
+        long l=input.size();
+        for(long i=0;i<l/2;i++){
+            if(input[i]!=input[l-i-1]){
+                b=false;
+            }
+        }
+        
+        return b;
+    }
+};
