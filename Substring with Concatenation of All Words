@@ -1,0 +1,39 @@
+class Solution {
+public:
+    vector<int> findSubstring(string S, vector<string> &L) {
+         vector<int> result;
+         int wordlen=L[0].size();
+         if(wordlen*L.size()>S.size()){
+             return result;
+         }
+         unordered_map<string,int> Lmap;
+         for(int i=0;i<L.size();i++){
+             Lmap[L[i]]++;
+         }
+         
+         for(int i=0;i<=S.size()-wordlen*L.size();i++){
+             Lmap.clear();
+             for(int i=0;i<L.size();i++){
+                Lmap[L[i]]++;
+             }            
+             
+             int cur=i;
+             string cursub=S.substr(cur,wordlen);
+             while(Lmap.find(cursub)!=Lmap.end()&&cur+wordlen<=S.size()){
+                 if(Lmap.find(cursub)->second>1){
+                     Lmap.find(cursub)->second--;
+                 }else{
+                    Lmap.erase(Lmap.find(cursub));
+                 }
+                 if(Lmap.empty()){
+                     result.push_back(i);
+                     break;
+                 }
+                 cur+=wordlen;
+                 cursub=S.substr(cur,wordlen);
+             }
+         }
+         
+         return result;
+    }
+};
