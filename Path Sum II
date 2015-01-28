@@ -1,0 +1,45 @@
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+ 
+           void findvec(TreeNode *rt, int &summ, vector<int> &vtrack, vector<vector<int>> &re){
+               if(rt){
+                   vtrack.push_back(rt->val);
+                   summ-=rt->val;
+               }
+               if(summ==0&&!rt->left&&!rt->right){
+                   re.push_back(vtrack);
+               }
+               
+               if(rt->left){
+                   findvec(rt->left,summ,vtrack,re);
+                   vtrack.pop_back();
+                   summ+=rt->left->val;
+               }
+               if(rt->right){
+                   findvec(rt->right,summ,vtrack,re);
+                   vtrack.pop_back();
+                   summ+=rt->right->val;
+               }               
+          }
+ 
+class Solution {
+public:
+    vector<vector<int> > pathSum(TreeNode *root, int sum) {
+          vector<int> vectrack;
+          vector<vector<int>> result;
+          if(!root){
+              return result;
+          }
+          findvec(root,sum,vectrack,result);
+          return result;
+          
+
+    }
+};
