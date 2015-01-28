@@ -1,0 +1,48 @@
+class Solution {
+public:
+    vector<vector<int> > generateMatrix(int n) {
+         vector<int> init;
+         init.assign(n,1);
+         vector<vector<int>> result;
+         result.assign(n,init);
+         
+         if(n==0||n==1){
+             return result;
+         }
+         
+         int total=n*n,row=0,col=0;
+         result[0][0]=1;
+         int x=n,y=n,i=2;
+         while(i<=total){
+             
+             for(int k=1;k<x;k++){
+                 result[row][++col]=i++;
+             }
+             if(i!=n+1){x--;}
+             
+             if(y>1){
+             for(int k=1;k<y;k++){
+                 result[++row][col]=i++;
+             }
+             y--;
+             }
+             
+             if(x>1){
+             for(int k=1;k<x;k++){
+                 result[row][--col]=i++;
+             }
+             x--; 
+             }
+                
+             if(y>1){    
+             for(int k=1;k<y;k++){
+                 result[--row][col]=i++;
+             }
+             y--;
+             }
+         }
+         
+         return result;
+         
+    }
+};
