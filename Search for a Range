@@ -1,0 +1,93 @@
+int bsearchsted(int A[], int st, int ed, int target, int &stlast, int &edlast){
+
+    if(st+1==ed){
+        stlast=st;
+        edlast=ed;
+        if(target==A[st]){return st;}
+        else if(target==A[ed]){return ed;}
+        else{return -1;}
+    }else{ 
+        int mid=(st+ed)/2;
+            stlast=st;
+            edlast=ed;
+        if(target==A[mid]){
+            return mid;
+        }else if(target<A[mid]){
+            return bsearchsted(A,st,mid,target,stlast,edlast);
+        }else{
+            return bsearchsted(A,mid,ed,target,stlast,edlast);
+        }
+    }
+}
+
+int searchleft(int A[],int st,int ed,int target){
+    if(st==ed){
+        return st;
+    }else if(st+1==ed){
+        return target==A[st]?st:ed;
+    }else{
+        int mid=(st+ed)/2;
+        if(target>A[mid]&&target==A[mid+1]){
+            return mid+1;
+        }else{
+            if(target==A[mid]){
+                return searchleft(A,st,mid,target);
+            }else{
+                return searchleft(A,mid,ed,target);
+            }
+        }
+    }
+}
+
+int searchright(int A[],int st,int ed,int target){
+    if(st==ed){
+        return st;
+    }else if(st+1==ed){
+        return target==A[ed]?ed:st;
+    }else{
+        int mid=(st+ed)/2;
+        if(target==A[mid]&&target<A[mid+1]){
+            return mid;
+        }else{
+            if(target==A[mid]){
+                return searchright(A,mid,ed,target);
+            }else{
+                return searchright(A,st,mid,target);
+            }
+        }
+    }
+}
+
+class Solution {
+public:
+    vector<int> searchRange(int A[], int n, int target) {
+         vector<int> result;
+         result.assign(2,-1);
+         if(n==0){
+             return result;
+         }else if(n==1){
+             if(target==A[0]){
+                 result[0]=0;
+                 result[1]=0;
+             }
+             return result;
+         }else{
+             if(target<A[0]||target>A[n-1]){
+                 return result;
+             }else{
+                 int newst, newed;
+                 int center=bsearchsted(A,0,n-1,target,newst,newed);
+                 if(center==-1){
+                     return result;
+                 }else{
+                     int left, right;
+                     left=searchleft(A,newst,center,target);
+                     right=searchright(A,center,newed,target);
+                     result[0]=left;
+                     result[1]=right;
+                     return result;
+                 }
+             }
+         }
+    }
+};
