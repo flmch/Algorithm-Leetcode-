@@ -1,0 +1,18 @@
+class Solution {
+public:
+    vector<int> twoSum(vector<int> &numbers, int target) {
+                vector<int> result;
+                unordered_map<int,int> mymap;
+                int len=numbers.size();
+                for(int i=0;i<len;i++){
+                    if(mymap.find(numbers[i])==mymap.end()){
+                        mymap.insert(pair<int,int>(target-numbers[i],i));
+                    }else{
+                        result.push_back(mymap[numbers[i]]+1);
+                        result.push_back(i+1);
+                        break;
+                    }
+                }
+                return result;
+    }
+};
