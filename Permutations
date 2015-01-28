@@ -1,0 +1,33 @@
+void getall(vector<int> &num, vector<vector<int>> &result, vector<int> &temp,int st){
+     if(st==-1){
+         result.push_back(temp);
+         return ;
+     }else{
+             int cur=num[st];
+             for(int j=0;j<num.size()-st;j++){
+                 temp.insert(temp.begin()+j,cur);
+                 getall(num,result,temp,st-1);
+                 temp.erase(temp.begin()+j,temp.begin()+j+1);
+             }
+     }
+}
+
+
+class Solution {
+public:
+    vector<vector<int> > permute(vector<int> &num) {
+            vector<vector<int>> result;
+            int len=num.size();
+            if(len==0){
+                return result;
+            }
+            vector<int> temp;
+            temp.push_back(num[len-1]);
+
+            getall(num,result,temp,len-2);
+            
+            sort(result.begin(),result.end());
+            
+            return result;
+    }
+};
