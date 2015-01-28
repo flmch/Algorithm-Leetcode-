@@ -1,0 +1,26 @@
+void getall(int n, int k,int st, vector<vector<int> > &result, vector<int> &temp){
+     if(temp.size()==k){
+         result.push_back(temp);
+         return ;
+     }else{
+         for(int i=st;i<n;i++){
+                 temp.push_back(i+1);
+                 getall(n,k,i+1,result,temp);
+                 temp.pop_back();
+         }
+     }
+}
+
+
+class Solution {
+public:
+    vector<vector<int> > combine(int n, int k) {
+            vector<int> temp;
+            vector<vector<int> > result;
+            
+            getall(n,k,0,result,temp);
+            //sort(result.begin(),result.end());
+            
+            return result;
+    }
+};
