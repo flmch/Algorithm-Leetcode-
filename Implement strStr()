@@ -1,0 +1,58 @@
+vector<int> next(char *needle){
+    int len=strlen(needle);
+    vector<int> result;
+    result.push_back(-1);
+    int i=1,j=0;
+    
+    while(i<len){
+        
+        if(needle[i]==needle[j]){
+            result.push_back(j);
+            j++;
+        }else if(needle[i]==needle[0]){
+            result.push_back(j);
+            j=1;
+        }else{
+            result.push_back(j);
+            j=0;
+        }
+        i++;
+    }
+    
+    return result;
+}
+
+
+class Solution {
+public:
+    int strStr(char *haystack, char *needle) {
+        int hlen=strlen(haystack);
+        int nlen=strlen(needle);
+        
+        if(nlen==0){return 0;}
+        
+        if(hlen==0||hlen<nlen){
+            return -1;
+        }
+        
+        //define next array to find same prefix and postfix
+        vector<int> prefix=next(needle);
+        
+        int i=0,j=0;
+        while(i<=hlen-nlen){
+            int cur=i;
+            while(haystack[cur]==needle[j]&&j<nlen){
+                cur++;
+                j++;
+            }
+            if(j==nlen){
+                return i;
+            }else{
+                i+=j-prefix[j];
+                j=0;
+            }
+        }
+        
+        return -1;
+    }
+};
