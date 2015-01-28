@@ -1,0 +1,72 @@
+class Solution {
+public:
+    int divide(int dividend, int divisor) {
+        if(divisor==0){
+            return 2147483647;
+        }
+        if(dividend==0){
+            return 0;
+        }
+        if(dividend==-2147483648&&divisor==-1){
+            return 2147483647;
+        }
+
+        if(divisor==1){
+            return dividend;
+        }
+        
+        int flag=1;
+        int maxmin=0;
+        if((dividend>0&&divisor<0)||(dividend<0&&divisor>0)){
+            flag=-1;
+        }
+            dividend=abs(dividend);
+            divisor=abs(divisor);       
+        if(dividend==divisor){
+            return flag;
+        }
+
+        
+        if(dividend==-2147483648){
+            dividend=2147483647;
+            maxmin=1;
+        }
+
+
+        if(dividend<divisor){
+            return 0;
+        }
+
+        if(divisor==-2147483648){
+            return 0;
+        }        
+        
+        int result;
+        int all=0;
+        int temp=0;
+        int sum=0;
+        while(dividend-sum>=divisor){
+            while(sum+temp+temp<=dividend&&sum+temp+temp>=0){
+                if(temp==0){
+                    temp=divisor;
+                    result=1;
+                }else{
+                    temp=temp+temp;
+                    result=result+result;
+                }
+            }
+            sum=sum+temp;
+            temp=0;
+            all=all+result;
+            result=0;
+            
+        }
+        
+        if(dividend==2147483647&&maxmin==1&&dividend-sum>=divisor-1){
+                all++;
+        }
+        
+        return flag==1?all:-all;
+        
+    }
+};
