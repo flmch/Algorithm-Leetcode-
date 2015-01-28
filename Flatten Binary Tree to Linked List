@@ -1,0 +1,30 @@
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+ 
+void inorder(TreeNode *r,vector<TreeNode*> &list){
+            list.push_back(r);
+            if(r->left){inorder(r->left, list);}
+            if(r->right){inorder(r->right, list);}
+     }
+ 
+class Solution {
+public:
+    void flatten(TreeNode *root) {
+         vector<TreeNode*> nodelist;
+            if(root){
+                inorder(root,nodelist);
+            }
+        
+        for(int i=1;i<nodelist.size();i++){
+            nodelist[i-1]->right=nodelist[i];
+            nodelist[i-1]->left=NULL;
+        }
+    }
+};
