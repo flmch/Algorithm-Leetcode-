@@ -1,0 +1,29 @@
+void swappoint(vector<vector<int> > &matrix, int x, int y, int n){
+    int temp=matrix[x][y];
+    for(int i=0;i<3;i++){
+        matrix[x][y]=matrix[n-1-y][x];
+        int xx=x,yy=y;
+        x=n-1-yy;
+        y=xx;
+    }
+    matrix[x][y]=temp;
+    return ;
+}
+
+class Solution {
+public:
+    void rotate(vector<vector<int> > &matrix) {
+        int n=matrix.size();
+        if(n==0||n==1){
+            return ;
+        }
+        else{
+            for(int i=0;i<(n/2);i++){
+                for(int j=i;j<n-1-i;j++){
+                    swappoint(matrix,i,j,n);
+                }
+            }
+            return ;
+        }
+    }
+};
