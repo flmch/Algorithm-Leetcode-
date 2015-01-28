@@ -1,0 +1,70 @@
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool isSymmetric(TreeNode *root) {
+            queue<TreeNode*> left;
+    queue<TreeNode*> right;
+    queue<int> leftval;
+    queue<int> rightval;
+    TreeNode *end;
+    end = new TreeNode(0);
+    
+    if(!root){
+        return true;
+    }else if(!root->left&&!root->right){
+        return true;
+    }else if((root->left&&!root->right)||(!root->left&&root->right))
+        return false;
+    else{
+        left.push(root->left);
+        while(!left.empty()){
+            if(left.front()==end){leftval.push(0);}else{leftval.push(left.front()->val);
+                //leftval.push(left.front()->val);
+                
+                    if(left.front()->left){left.push(left.front()->left);}else{left.push(end);}
+                    if(left.front()->right){left.push(left.front()->right);}else{left.push(end);}
+                
+            }
+            left.pop();
+        }
+        right.push(root->right);
+        while(!right.empty()){
+            if(right.front()==end){rightval.push(0);}else{rightval.push(right.front()->val);
+                //rightval.push(right.front()->val);
+                
+                    if(right.front()->right){right.push(right.front()->right);}else{right.push(end);}
+                    if(right.front()->left){right.push(right.front()->left);}else{right.push(end);}
+                
+            }
+            
+            right.pop();
+        }
+        
+        if(leftval.size()!=rightval.size()){
+            //cout << leftval.size() << endl;
+            //cout << rightval.size() << endl;
+            return false;
+        }else{
+            bool b = true;
+            long s = leftval.size();
+            for(int i =0;i<s;i++){
+                //cout << leftval.front() << endl;
+                //cout << rightval.front() << endl;
+                if(leftval.front()!=rightval.front()){b = false;}
+                leftval.pop();
+                rightval.pop();
+            }
+            return b;
+        }
+        
+    }
+    }
+};
