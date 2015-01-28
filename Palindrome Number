@@ -1,0 +1,27 @@
+class Solution {
+public:
+    bool isPalindrome(int x) {
+        vector<int> input;
+        int temp;
+        if(x<0){return false;}
+        else if(x>0){temp = x;}
+        else{return true;}
+        
+        while(temp!=0){
+            int digit;
+            digit = temp - temp/10*10;
+            input.push_back(digit);
+            temp  = temp/10;
+        }
+        
+        bool b=true;
+        long l = input.size();
+        for(long i=0;i<l/2;i++){
+            if(input[i]!=input[l-i-1]){
+                b=false;
+            }
+        }
+        
+        return b;
+    }
+};
