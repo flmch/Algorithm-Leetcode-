@@ -1,0 +1,31 @@
+int maxsub(int A[], int st, int ed){
+    if(st==ed){
+        return A[st];
+    }else if(st+1==ed){
+        return max(max(A[st],A[ed]),A[st]+A[ed]);
+    }else{
+        int mid=(st+ed)/2;
+        int l=mid-2,r=mid+1;
+        int sumleft=A[mid-1],maxleft=A[mid-1],sumright=A[mid],maxright=A[mid];
+        while(l>=st){
+            sumleft+=A[l];
+            maxleft=max(sumleft,maxleft);
+            l--;
+        }
+        while(r<=ed){
+            sumright+=A[r];
+            maxright=max(sumright,maxright);
+            r++;
+        }  
+        return max(max(maxsub(A,st,mid-1),maxsub(A,mid,ed)),maxleft+maxright);
+    }
+}
+
+
+class Solution {
+public:
+    int maxSubArray(int A[], int n) {
+        if(n==0){return 0;}
+        else{return maxsub(A,0,n-1);}
+    }
+};
