@@ -1,0 +1,31 @@
+int bsearch(int A[], int st, int ed, int target){
+        if(st+1==ed){
+            return ed;
+        }else{
+            int mid=(st+ed)/2;
+            if(target==A[mid]){
+                return mid;
+            }else if(target<A[mid]){
+                return bsearch(A,st,mid,target);
+            }else{
+                return bsearch(A,mid,ed,target);
+            }
+        }
+}
+
+
+
+class Solution {
+public:
+    int searchInsert(int A[], int n, int target) {
+        if(n==0){return 0;}
+        
+        if(target<=A[0]){
+            return 0;
+        }else if(target>A[n-1]){
+            return n;
+        }else{
+            return bsearch(A,0,n-1,target);
+        }
+    }
+};
