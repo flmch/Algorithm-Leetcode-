@@ -1,0 +1,35 @@
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+
+void inorder(TreeNode *root, int &sum){
+     if(!root->left&&!root->right){
+         sum+=root->val;
+     }else{
+        if(root->left){
+            root->left->val+=root->val*10;
+            inorder(root->left, sum);
+        }
+        if(root->right){
+            root->right->val+=root->val*10;
+            inorder(root->right, sum);
+        }     
+     }
+} 
+ 
+class Solution {
+public:
+    int sumNumbers(TreeNode *root) {
+        if(!root){return 0;}
+        int sum=0;
+        inorder(root,sum);
+        
+        return sum;
+    }
+};
