@@ -1,0 +1,50 @@
+int searchrow(vector<vector<int>> mat,int st, int ed, int target){
+    if(st==ed){
+        return st;
+    }else if(st+1==ed){
+        return target<mat[ed][0]?st:ed;
+    }else{
+        int mid=(st+ed)/2;
+        if(target<mat[mid][0]){
+            return searchrow(mat,st,mid,target);
+        }else{
+            return searchrow(mat,mid,ed,target);
+        }
+    }
+}
+
+bool searchcol(vector<vector<int>> mat,int st,int ed,int target,int r){
+    if(st==ed){
+        return mat[r][st]==target?true:false;
+    }else if(st+1==ed){
+        return target==mat[r][st]||target==mat[r][ed]?true:false;
+    }else{
+        int mid=(st+ed)/2;
+        if(target==mat[r][mid]){
+            return true;
+        }else if(target<mat[r][mid]){
+            return searchcol(mat,st,mid,target,r);
+        }else{
+            return searchcol(mat,mid,ed,target,r);
+        }
+    }
+}
+
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int> > &matrix, int target) {
+         int row=matrix.size();
+         if(row==0){
+             return false;
+         }         
+         int col=matrix[0].size();
+         if(col==0){
+             return false;
+         }else if(target<matrix[0][0]&&target>matrix[row-1][col-1]){
+             return false;
+         }else{
+             int r=searchrow(matrix,0,row-1,target);
+             return searchcol(matrix,0,col-1,target,r);
+         }
+    }
+};
