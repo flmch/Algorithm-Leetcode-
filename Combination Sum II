@@ -1,0 +1,37 @@
+void getall(vector<int> &candidates, int target,int st, int &sum, vector<vector<int> > &result,vector<int> &temp){
+     if(sum==target){
+         result.push_back(temp);
+         return ;
+     }else{
+         for(int i=st;i<candidates.size();i++){
+
+             if(candidates[i]<=target&&sum+candidates[i]<=target){
+                 temp.push_back(candidates[i]);
+                 sum+=candidates[i];
+                 getall(candidates,target,i+1,sum,result,temp);
+                 temp.pop_back();
+                 sum-=candidates[i];
+             }
+             
+             while(candidates[i]==candidates[i+1]&&i<candidates.size()-1){
+                 i++;
+             }             
+         }
+     }
+}
+
+
+class Solution {
+public:
+    vector<vector<int> > combinationSum2(vector<int> &num, int target) {
+            vector<vector<int> > result;
+            vector<int> temp;
+            int sum=0;
+            
+            sort(num.begin(),num.end());
+            
+            getall(num,target,0,sum,result,temp);
+            
+            return result;        
+    }
+};
