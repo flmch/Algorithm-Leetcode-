@@ -1,0 +1,35 @@
+struct compare{
+    bool operator()(const vector<int> &first,const vector<int> &second){
+        return first[0]<second[0];
+    }
+};
+
+void generateSub(vector<int> &s, int step, vector<int> &output, vector<vector<int>> &result){
+     for(int i = step;i<s.size(); i++ )  
+      {  
+        output.push_back(s[i]);  
+        result.push_back(output);  
+        if(i< s.size()-1)  
+          generateSub(s, i+1, output, result);  
+        output.pop_back();  
+      } 
+}
+
+class Solution {
+public:
+    vector<vector<int> > subsets(vector<int> &S) {
+          vector<int> temp;
+          vector<vector<int> > result;
+          int len=S.size();
+          if(len==0){return result;}
+          else{
+              sort(S.begin(),S.end());
+              generateSub(S,0,temp,result);
+              compare c;
+              sort(result.begin(),result.end(),c);
+              temp.clear();
+              result.insert(result.begin(),temp);
+              return result;
+          }
+    }
+};
