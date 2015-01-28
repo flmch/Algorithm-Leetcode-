@@ -1,0 +1,29 @@
+/**
+ * Definition for binary tree with next pointer.
+ * struct TreeLinkNode {
+ *  int val;
+ *  TreeLinkNode *left, *right, *next;
+ *  TreeLinkNode(int x) : val(x), left(NULL), right(NULL), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    void connect(TreeLinkNode *root) {
+            vector<TreeLinkNode*> treenodes;
+            int cur=-1,last=-1;
+            
+            if(root){
+                treenodes.push_back(root);
+                while(last!=treenodes.size()){
+                    last=treenodes.size();
+                    while(cur<last-1){
+                        cur++;
+                        if(treenodes[cur]->left){treenodes.push_back(treenodes[cur]->left);}
+                        if(treenodes[cur]->right){treenodes.push_back(treenodes[cur]->right);}
+                        if(cur!=last-1){treenodes[cur]->next=treenodes[cur+1];}
+                    }
+                }
+            }
+            
+    }
+};
