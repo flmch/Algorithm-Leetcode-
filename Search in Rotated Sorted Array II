@@ -1,0 +1,58 @@
+bool bsearch(int A[],int st, int ed, int target){
+    if(st==ed){
+        return target==A[st]?true:false;
+    }else if(st+1==ed){
+        if(target==A[st]){return true;}
+        else if(target==A[ed]){return true;}
+        else{return false;}
+    }else{
+        int mid=(st+ed)/2;
+        if(target==A[mid]){return true;}
+        else if(target<A[mid]){
+            return bsearch(A,st,mid,target);
+        }else{
+            return bsearch(A,mid,ed,target);
+        }
+    }
+}
+
+int searchpivot(int A[], int n){
+    int i=0;
+    while(i<n-1){
+        if(A[i]>A[i+1]){
+           break; 
+        }
+        i++;
+    }
+    return i==n-1?-1:i;
+}
+
+
+class Solution {
+public:
+    bool search(int A[], int n, int target) {
+        if(n==0){return false;}
+        else if(n==1){
+            return target==A[0]?true:false;
+        }else{
+            if(A[0]<A[n-1]){
+                if(target<A[0]&&target>A[n-1]){
+                    return false;
+                }else{
+                    return bsearch(A,0,n-1,target);
+                }
+            }else{
+                int pivot=searchpivot(A,n);
+                if(pivot==-1){
+                    return target==A[0]?true:false;
+                }else{
+                    if(target>=A[0]){
+                        return bsearch(A,0,pivot,target);
+                    }else{
+                        return bsearch(A,pivot+1,n-1,target);
+                    }
+                }
+            }
+        }        
+    }
+};
