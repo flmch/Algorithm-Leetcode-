@@ -1,0 +1,49 @@
+/**
+ * Definition for a point.
+ * struct Point {
+ *     int x;
+ *     int y;
+ *     Point() : x(0), y(0) {}
+ *     Point(int a, int b) : x(a), y(b) {}
+ * };
+ */
+class Solution {
+public:
+    int maxPoints(vector<Point> &points) {
+        int num=points.size();
+        if(num==0){
+            return 0;
+        }
+        int result=1;
+        unordered_map<float,int> slopes;
+        for(int i=0;i<num;i++){
+            int tempresult=0;
+            slopes.clear();
+            int VerticalLineCount=0;
+            int overlap=0;
+            
+            for(int j=0;j<num;j++){
+                    if(points[i].x==points[j].x){
+                        if(points[i].y==points[j].y){
+                            overlap++;
+                        }else{
+                            VerticalLineCount++;
+                        }
+                    }else{
+                        float k=((float)points[i].y-(float)points[j].y)/((float)points[i].x-(float)points[j].x);
+                        if(slopes.find(k)==slopes.end()){
+                            slopes[k]=1;
+                        }else{
+                            slopes[k]++;
+                        }
+                        tempresult=tempresult<slopes[k]?slopes[k]:tempresult;
+                    }
+            }
+            tempresult=tempresult<VerticalLineCount?VerticalLineCount:tempresult;
+            tempresult+=overlap;
+            result=tempresult>result?tempresult:result;
+        }
+        
+        return result;
+    }
+};
