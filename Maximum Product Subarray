@@ -1,0 +1,38 @@
+int maxsub(int A[], int st, int ed){
+    if(st==ed){
+        return A[st];
+    }else if(st+1==ed){
+        return max(max(A[st],A[ed]),A[st]*A[ed]);
+    }else{
+        int mid=(st+ed)/2;
+        int l=mid-2,r=mid+1;
+        int maxleft=A[mid-1],minleft=A[mid-1],productleft=A[mid-1];
+        int maxright=A[mid],minright=A[mid],productright=A[mid];
+        while(l>=st){
+            productleft*=A[l];
+            maxleft=max(productleft,maxleft);
+            minleft=min(productleft,minleft);
+            l--;
+        }
+        while(r<=ed){
+            productright*=A[r];
+            maxright=max(productright,maxright);
+            minright=min(productright,minright);
+            r++;
+        } 
+        return max(max(maxsub(A,st,mid-1),maxsub(A,mid,ed)),
+                   max(
+                       max(maxleft*maxright,minleft*minright),
+                       max(maxleft*minright,minleft*maxright)
+                       )
+                  );
+    }
+}
+
+class Solution {
+public:
+    int maxProduct(int A[], int n) {
+        if(n==0){return 0;}
+        else{return maxsub(A,0,n-1);}
+    }
+};
