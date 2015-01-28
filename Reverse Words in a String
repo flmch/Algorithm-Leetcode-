@@ -1,0 +1,30 @@
+class Solution {
+public:
+    void reverseWords(string &s) {
+            int len=s.length();
+            vector<string> word;
+            int tracker=0;
+            while(tracker<len){
+                if(s[tracker]==' '){
+                    tracker++;
+                }else{
+                    string temp;
+                    while(s[tracker]!=' '&&tracker<len){
+                        temp.push_back(s[tracker]);
+                        tracker++;
+                    }
+                    word.push_back(temp);
+                }
+            }
+            
+            s.clear();
+            if(word.size()!=0){
+                while(word.size()>1){
+                    s.append(word.back());
+                    s.push_back(' ');
+                    word.pop_back();
+                }
+                s.append(word.back());
+            }
+    }
+};
