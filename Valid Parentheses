@@ -1,0 +1,34 @@
+int match(int x){
+    switch(x){
+        case 40: return 41;break;
+        case 41: return 40;break;
+        case 91: return 93;break;
+        case 93: return 91;break;
+        case 123: return 125;break;
+        case 125: return 123;break;
+        default: return 0;
+    }
+}
+
+class Solution {
+public:
+    bool isValid(string s) {
+        stack<int> NumberStack;
+        if(s.size()==0){return true;}
+        int cur=0;
+        while(cur<s.size()){
+            int temp=s[cur];
+            if(temp==41||temp==93||temp==125){
+                if(NumberStack.size()==0){return false;}
+                else if(NumberStack.top()==match(temp)){NumberStack.pop();}
+                else{return false;}
+            }
+            else if(temp==40||temp==91||temp==123){NumberStack.push(temp);}
+            else{return false;}
+            cur++;
+        }
+        
+        if(NumberStack.size()==0){return true;}
+        return false;
+    }
+};
