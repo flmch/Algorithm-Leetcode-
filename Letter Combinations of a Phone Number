@@ -1,0 +1,85 @@
+void newstring(vector<string> &result, int num, vector<vector<char>> pattern){
+     int len=result.size();
+     if(len==0){
+         for(int i=0;i<pattern[num-2].size();i++){
+             string temp;
+             temp.push_back(pattern[num-2][i]);
+             result.push_back(temp);
+         }
+     }else{
+         vector<string> tempresult;
+         for(int i=0;i<len;i++){
+             for(int j=0;j<pattern[num-2].size();j++){
+                 string temp;
+                 temp.push_back(pattern[num-2][j]);
+                 tempresult.push_back(result[i]+temp);
+             }
+         }
+         result=tempresult;
+     }
+}
+
+class Solution {
+public:
+    vector<string> letterCombinations(string digits) {
+            vector<vector<char>> letterpattern;
+            vector<char> one;
+            one.push_back('a');
+            one.push_back('b');
+            one.push_back('c');
+            letterpattern.push_back(one);
+            one.clear();
+            one.push_back('d');
+            one.push_back('e');
+            one.push_back('f');
+            letterpattern.push_back(one);
+            one.clear();
+            one.push_back('g');
+            one.push_back('h');
+            one.push_back('i');
+            letterpattern.push_back(one);
+            one.clear();
+            one.push_back('j');
+            one.push_back('k');
+            one.push_back('l');
+            letterpattern.push_back(one);
+            one.clear();
+            one.push_back('m');
+            one.push_back('n');
+            one.push_back('o');
+            letterpattern.push_back(one);
+            one.clear();
+            one.push_back('p');
+            one.push_back('q');
+            one.push_back('r');
+            one.push_back('s');
+            letterpattern.push_back(one);
+            one.clear();
+            one.push_back('t');
+            one.push_back('u');
+            one.push_back('v');
+            letterpattern.push_back(one);
+            one.clear();
+            one.push_back('w');
+            one.push_back('x');
+            one.push_back('y');
+            one.push_back('z');
+            letterpattern.push_back(one);
+            
+            
+            int dlen=digits.length();
+            vector<string> re;
+            if(dlen==0){
+                re.push_back("");
+                return re;
+            }
+            for(int i=0;i<dlen;i++){
+                int currentnum=digits[i]-48;
+                if(digits[i]!='1'&&digits[i]!='0'&&digits[i]!='*'&&digits[i]!='#'){
+                    newstring(re, currentnum, letterpattern);
+                }
+            }
+            
+            return re;
+    }
+};
