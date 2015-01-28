@@ -1,0 +1,12 @@
+class Solution {
+public:
+    int climbStairs(int n) {
+        vector<int> sta(n+1);
+        sta[0]=1;
+        sta[1]=2;
+        for(int i=2;i<n;i++){
+            sta[i]=sta[i-1]+sta[i-2];
+        }
+        return sta[n-1];
+    }
+};
