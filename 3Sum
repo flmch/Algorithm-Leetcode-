@@ -1,0 +1,68 @@
+class Solution {
+public:
+    vector<vector<int> > threeSum(vector<int> &num) {
+        sort(num.begin(),num.end());
+        vector<int> temp;
+        vector<vector<int> > result;
+        
+        if(num.size()<3){
+            return result;
+        }
+        
+        //create hashtable
+        unordered_map<int,int> htable;
+        for(int i=0;i<num.size();i++){
+            htable[num[i]]++;
+        }
+        
+        //loop once to get result;
+        for(int i=0;i<=num.size()-3;i++){
+
+            if(i>0){
+                while(num[i]==num[i-1]&&i<num.size()-1){
+                    i++;
+                }
+                if(num[i]==num[i-1]){
+                    break;
+                }
+            }
+
+            if(num[i]>0){
+                continue;
+            }
+            
+            //get first number;
+            temp.push_back(num[i]);
+            htable[num[i]]--;
+            int target=0-num[i];
+            int cur=i+1;
+            
+            //get two more;
+            while(num[cur]<(target+1)/2){
+                if(htable.find(target-num[cur])!=htable.end()){
+                    temp.push_back(num[cur]);
+                    temp.push_back(target-num[cur]);
+                    result.push_back(temp);
+                    temp.erase(temp.end()-2,temp.end());
+                }
+                cur++;
+                while(num[cur]==num[cur-1]&&cur<num.size()-1){
+                    cur++;
+                }
+            }
+            
+            if(htable.find(target/2)!=htable.end()&&htable[target/2]>=2&&target%2==0){
+                temp.push_back(target/2);
+                temp.push_back(target/2);
+                result.push_back(temp);
+                temp.erase(temp.end()-2,temp.end());
+            }
+            
+            temp.pop_back();
+            htable[num[i]]++;
+            
+        }
+        
+        return result;
+    }
+};
