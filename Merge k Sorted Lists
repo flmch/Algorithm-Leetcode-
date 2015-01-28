@@ -1,0 +1,50 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+ 
+    ListNode *mergeTwoLists(ListNode *l1, ListNode *l2) {
+        if(!l1&&!l2){return l1;}
+        if(!l1){return l2;}
+        if(!l2){return l1;}
+        ListNode *resulthead, *lastval;
+        ListNode *temp = l1->val<=l2->val ? l1:l2;
+        temp==l1 ? l1=l1->next : l2=l2->next;
+        temp->next=NULL;
+        resulthead=temp;
+        lastval=temp;
+        while(l1&&l2){
+            temp = l1->val<=l2->val ? l1:l2;
+            temp==l1 ? l1=l1->next : l2=l2->next;
+            temp->next=NULL;
+            lastval->next=temp;
+            lastval=lastval->next;
+        }
+        l1 ? lastval->next = l1 : lastval->next = l2;
+        
+        return resulthead;
+    } 
+ 
+class Solution {
+public:
+    ListNode *mergeKLists(vector<ListNode *> &lists) {
+         int len=lists.size();
+         if(len==0){
+             return NULL;
+         }else if(len==1){
+             return lists[0];
+         }else if(len==2){
+             return mergeTwoLists(lists[0],lists[1]);
+         }else{
+             vector<ListNode *> sub1;
+             vector<ListNode *> sub2;
+             sub1.assign(lists.begin(),lists.begin()+len/2);
+             sub2.assign(lists.begin()+len/2,lists.end());
+             return mergeTwoLists(mergeKLists(sub1),mergeKLists(sub2));
+         }  
+    }
+};
