@@ -1,0 +1,35 @@
+class Solution {
+public:
+    bool isValidSudoku(vector<vector<char> > &board) {
+        for(int i=0;i<9;i++){
+            int temprow[10],tempcol[10],tempbox[10];
+            
+            for(int t=0;t<10;t++){
+                temprow[t]=0;
+                tempcol[t]=0;
+                tempbox[t]=0;
+            }
+            
+            for(int j=0;j<9;j++){
+                if(board[i][j]-48>=1&&board[i][j]-48<=9){
+                    if(++temprow[board[i][j]-48]>1){return 0;}
+                }
+                if(board[j][i]-48>=1&&board[j][i]-48<=9){
+                    if(++tempcol[board[j][i]-48]>1){return 0;}
+                }
+            }
+            
+            int currentx=i%3;
+            int currenty=i/3;
+            for(int k=currentx*3;k<currentx*3+3;k++){
+                for(int l=currenty*3;l<currenty*3+3;l++){
+                    if(board[k][l]-48>=1&&board[k][l]-48<=9){
+                        if(++tempbox[board[k][l]-48]>1){return 0;}
+                    }
+                }
+            }
+        }
+        
+        return 1;
+    }
+};
