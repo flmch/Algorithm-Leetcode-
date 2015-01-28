@@ -1,0 +1,80 @@
+class Solution {
+public:
+string minWindow(string S, string T) {
+    string result;
+    int flag=0;
+    
+    if(T.size()>S.size()){
+        return "";
+    }
+
+    unordered_map<char,int> Tmap;
+    unordered_map<char,int> track;
+    
+    for(int i=0;i<T.size();i++){
+        Tmap[T[i]]++;
+        track[T[i]]++;
+    }
+    
+    int st=0, ed=0;
+    
+    while(track.find(S[st])==track.end()&&st<S.size()-T.size()){
+        st++;
+        ed++;
+    }
+    
+    while(ed<S.size()){
+        if(Tmap.find(S[ed])!=Tmap.end()||flag==0){
+            track[S[ed]]--;
+            if(Tmap[S[ed]]>1){
+                Tmap[S[ed]]--;
+            }else{
+                Tmap.erase(S[ed]);
+                if(Tmap.empty()){
+                    if(flag==0){
+                        while(track.find(S[st])!=track.end()&&track[S[st]]<0){
+                            track[S[st]]++;
+                            st++;
+                        }
+                        
+                        
+                        result=S.substr(st,ed-st+1);
+                        flag=1;
+                    }else{
+                        result=ed-st+1<result.size()?S.substr(st,ed-st+1):result;
+                    }
+                }
+            }
+        }else if(track.find(S[ed])!=track.end()){
+            track[S[ed]]--;
+            while(S[st]!=S[ed]){
+                if(track[S[st]]>=0){
+                    break;
+                }
+                if(track.find(S[st])!=track.end()){
+                    Tmap[S[st]]++;
+                    track[S[st]]++;
+                }
+                st++;
+            }
+            if(S[st]==S[ed]){
+                track[S[ed]]++;
+                st++;
+            while(track.find(S[st])==track.end()||track[S[st]]<0){
+                if(track.find(S[st])!=track.end()){
+                    track[S[st]]++;
+                }
+                st++;
+            }
+            }
+            if(Tmap.empty()){
+                //cout << S.substr(st,ed-st+1) << endl;
+                result=ed-st+1<result.size()?S.substr(st,ed-st+1):result;
+                flag=1;
+            }
+        }
+        ed++;
+    }
+    return result;
+}
+};
