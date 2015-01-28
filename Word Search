@@ -1,0 +1,83 @@
+void trackdown(int &find,vector<vector<char> > &board, string word, vector<vector<int> > &check, int cur, int row, int col,bool &result){
+     if(cur==word.size()-1){
+         result=true;
+         find=1;
+         return ;
+     }else{
+          
+          if(find==0&&row>0&&check[row-1][col]==0&&word[cur+1]==board[row-1][col]){
+              check[row][col]=1;
+              row--;
+              trackdown(find,board,word,check,cur+1,row,col,result);
+              row++;
+              check[row][col]=0;
+          }
+          if(find==0&&row<board.size()-1&&check[row+1][col]==0&&word[cur+1]==board[row+1][col]){
+              check[row][col]=1;
+              row++;
+              trackdown(find,board,word,check,cur+1,row,col,result);
+              row--;
+              check[row][col]=0;
+          }
+          if(find==0&&col>0&&check[row][col-1]==0&&word[cur+1]==board[row][col-1]){
+              check[row][col]=1;
+              col--;
+              trackdown(find,board,word,check,cur+1,row,col,result);
+              col++;
+              check[row][col]=0;
+          }
+          if(find==0&&col<board[0].size()-1&&check[row][col+1]==0&&word[cur+1]==board[row][col+1]){
+              check[row][col]=1;
+              col++;
+              trackdown(find,board,word,check,cur+1,row,col,result);
+              col--;
+              check[row][col]=0;
+          } 
+          
+     }
+}
+
+
+class Solution {
+public:
+    bool exist(vector<vector<char> > &board, string word) {
+         int len=word.size();
+         if(word.size()==0){
+             return true;
+         }
+        
+         int row=board.size();
+         
+         if(row==0){
+             return false;
+         }
+         
+         int col=board[0].size();
+         if(col==0){
+             return false;
+         }
+         
+         if(len>row*col){
+             return false;
+         }
+         
+         vector<int> tempcol(col,0);
+         vector<vector<int> > check(row,tempcol);
+         bool result=false;
+         
+         for(int i=0;i<row;i++){
+             for(int j=0;j<col;j++){
+                 if(board[i][j]==word[0]){
+                         int find=0;  
+                         trackdown(find,board, word, check, 0,i,j,result);
+                         if(result){
+                             break;
+                         }
+                     
+                 }
+             }
+         }
+         
+         return result;
+    }
+};
