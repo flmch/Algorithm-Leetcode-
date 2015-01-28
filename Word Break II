@@ -1,0 +1,33 @@
+void getall(string s, int st, unordered_set<string> dict, vector<bool> &step, vector<string> &result,string &temp){
+        for(int i=st;i<s.size();i++){
+            if(step[i]&&dict.find(s.substr(st,i-st+1))!=dict.end()){
+                temp.append(s.substr(st,i-st+1));
+                if(i==s.size()-1){
+                    result.push_back(temp);
+                }else{
+                    temp.push_back(' ');
+                    int beforechange=result.size();
+                    getall(s,i+1,dict,step,result,temp);
+                    if(result.size()==beforechange){
+                        step[i]=false;
+                    }
+                    temp.erase(temp.end()-1,temp.end());
+                }
+                temp.erase(temp.end()-(i-st+1),temp.end());
+            }
+        }
+}
+
+class Solution {
+public:
+    vector<string> wordBreak(string s, unordered_set<string> &dict) {
+         int len=s.size();
+         vector<string> result;
+         string temp;
+         vector<bool> step(len,true);
+         
+         getall(s,0,dict,step,result,temp);
+         
+         return result;
+    }
+};
