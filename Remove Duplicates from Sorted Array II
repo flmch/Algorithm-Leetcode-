@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int removeDuplicates(int A[], int n) {
+        if(n<=1){return n;}
+        int fast=1,slow=1,count=0;
+        while(fast<n){
+            if(A[fast]==A[fast-1]){
+                if(count!=0){
+                fast++;
+                continue;
+                }
+            }
+                
+                A[slow]=A[fast];
+                if(A[slow]==A[slow-1]){
+                    count=1;
+                }else{
+                    count=0;
+                }
+                fast++;
+                slow++;
+                
+            
+        }
+        return slow;
+    }
+};
