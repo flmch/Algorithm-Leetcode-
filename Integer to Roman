@@ -1,0 +1,60 @@
+char inttochar(int i){
+    switch(i){
+    case 1: return 'I';
+            break;
+    case 5: return 'V';
+            break;
+    case 10: return 'X';
+            break;
+    case 50: return 'L';
+            break;
+    case 100: return 'C';
+            break;
+    case 500: return 'D';
+            break;
+    case 1000: return 'M';
+            break;            
+    }
+}
+
+class Solution {
+public:
+    string intToRoman(int num) {
+        
+        string result;
+        int power, digit;
+        power=1;
+        while(num!=0){
+            digit=num%(power*10);
+            num-=digit;
+            if(digit>=(1*power)&&digit<=(3*power)){
+                string temp;
+                for(int i=0;i<(digit/power);i++){
+                    temp.push_back(inttochar(power));
+                }
+                result.insert(0,temp);
+            }else if(digit==(4*power)){
+                string temp;
+                temp.push_back(inttochar(power));
+                temp.push_back(inttochar(power*5));
+                result.insert(0,temp);
+            }else if(digit>=(5*power)&&digit<=(8*power)){
+                string temp;
+                temp.push_back(inttochar(5*power));
+                for(int i=5;i<(digit/power);i++){
+                    temp.push_back(inttochar(power));
+                }
+                result.insert(0,temp);
+            }else if(digit==(9*power)){
+                string temp;
+                temp.push_back(inttochar(power));
+                temp.push_back(inttochar(10*power));
+                result.insert(0,temp);
+            }
+            power*=10;
+        }
+        
+        return result;
+        
+    }
+};
