@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int maxProfit(vector<int> &prices) {
+        int len=prices.size();
+        if(len==0||len==1){return 0;}
+        int cur=1,max=0,min=0,profit=0;
+        while(cur<len){
+            if(prices[cur]>=prices[cur-1]){
+                max=cur;
+            }else{
+                profit+=prices[max]-prices[min];
+                max=cur;
+                min=cur;
+            }
+            
+            if(cur==len-1){
+                profit+=prices[max]-prices[min];
+            }
+            
+            cur++;
+        }
+        
+        return profit;
+    }
+};
