@@ -1,0 +1,24 @@
+class Solution {
+public:
+    string getPermutation(int n, int k) {
+         vector<char> num;
+         string result;
+         int total=1;
+         
+         for(int i=1;i<=n;i++){
+             num.push_back((char)(i+48));
+             total*=i;
+         }
+         
+         for(int j=0;j<n-1;j++){
+             int cur=(k-1)*(n-j)/total;
+             result.push_back(num[cur]);
+             total=total/(n-j);
+             k=k-total*cur;
+             num.erase(num.begin()+cur);
+         }
+         result.push_back(num.back());
+         
+         return result;
+    }
+};
