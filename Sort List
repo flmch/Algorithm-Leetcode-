@@ -1,0 +1,100 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+
+int lengthoflist(ListNode *head){
+    int result=0;
+    ListNode *temp=head;
+    while(temp){
+        result++;
+        temp=temp->next;
+    }
+    return result;
+}
+ 
+void splitlist(ListNode *head, ListNode *&a, ListNode *&b){
+     ListNode *fast=head,*slow=head;
+     while(fast->next){
+         fast=fast->next;
+         if(fast->next){
+             fast=fast->next;
+             slow=slow->next;
+         }
+     }
+     a=head;
+     b=slow->next;
+     slow->next=NULL;
+}
+
+ListNode *mergelist(ListNode *a, ListNode *b){
+     ListNode *result;
+     ListNode *hd;
+     if(a->val<=b->val){
+                ListNode *temp=a;
+                a=a->next;
+                temp->next=NULL;
+                result=temp;
+     }else{
+                ListNode *temp=b;
+                b=b->next;
+                temp->next=NULL;
+                result=temp;
+     }
+     
+     hd=result;
+     while(a||b){
+         if(a&&b){
+            if(a->val<=b->val){
+                ListNode *temp=a;
+                a=a->next;
+                temp->next=NULL;
+                result->next=temp;
+                result=result->next;
+            }else{
+                ListNode *temp=b;
+                b=b->next;
+                temp->next=NULL;
+                result->next=temp;
+                result=result->next;
+            }             
+         }else if(!a){
+             result->next=b;
+             b=NULL;
+         }else{
+             result->next=a;
+             a=NULL;
+         }
+     }
+    
+    return hd;
+}
+
+ListNode *slist(ListNode *head){
+            if(lengthoflist(head)>2){
+                ListNode *a,*b;
+                splitlist(head, a,b);
+                a=slist(a);
+                b=slist(b);
+                head=mergelist(a,b);
+            }else if(lengthoflist(head)==2){
+                if(head->val>head->next->val){
+                    ListNode *temp=head->next;
+                    head->next=NULL;
+                    temp->next=head;
+                    head=temp;
+                }
+            }
+            return head;    
+}
+
+class Solution {
+public:
+    ListNode *sortList(ListNode *head) {
+            return slist(head);
+    }
+};
