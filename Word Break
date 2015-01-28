@@ -1,0 +1,27 @@
+void wordb(string s, int st, unordered_set<string> &dict, bool &check, vector<bool> &step){
+    for(int i=st;i<s.size();i++){
+        if(step[i]&&dict.find(s.substr(st,i-st+1))!=dict.end()){
+            if(i==s.size()-1){
+                check=true;
+                return ;
+            }else{
+                wordb(s,i+1,dict,check,step);
+                
+                    step[i]=false;
+                
+            }
+        }
+    }
+    
+    return ;
+}
+
+class Solution {
+public:
+    bool wordBreak(string s, unordered_set<string> &dict) {
+        bool result=false;
+        vector<bool> step(s.size(),true);
+        wordb(s,0,dict,result,step);
+        return result;
+    }
+};
