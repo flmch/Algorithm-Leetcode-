@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int longestValidParentheses(string s) {
+        
+        stack<int> paren;
+
+        for(int i=0;i<s.size();i++){
+            if(s[i]=='('){
+                paren.push(i);
+            }else{
+                if(paren.empty()||s[paren.top()]==')'){
+                    paren.push(i);
+                }else{
+                    paren.pop();
+                }
+            }
+        }
+        
+        if(paren.empty()){
+            return s.size();
+        }
+        
+        int st=paren.top(),ed=s.size();
+        int result=ed-st-1;
+        while(!paren.empty()){
+            ed=paren.top();
+            paren.pop();
+            st=paren.empty()?-1:paren.top();
+            result=ed-st>result?ed-st-1:result;
+        }
+        return result;
+    }
+};
