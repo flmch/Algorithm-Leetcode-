@@ -1,0 +1,57 @@
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<vector<int> > zigzagLevelOrder(TreeNode *root) {
+        vector<TreeNode*> nodelist;
+        vector<vector<int> > result;
+        vector<int> level; 
+        int reversesign=1;
+        
+        if(!root){
+            return result;
+        }
+        
+        nodelist.push_back(root);
+        level.push_back(root->val);
+        result.push_back(level);
+        while(!nodelist.empty()){
+            vector<TreeNode*> temp;
+            level.clear();
+            for(int i=nodelist.size()-1;i>=0;i--){
+                if(reversesign==1){
+                    if(nodelist[i]->right){
+                        temp.push_back(nodelist[i]->right);
+                        level.push_back(nodelist[i]->right->val);
+                    }
+                    if(nodelist[i]->left){
+                        temp.push_back(nodelist[i]->left);
+                        level.push_back(nodelist[i]->left->val);
+                    }
+                }else{
+                    if(nodelist[i]->left){
+                        temp.push_back(nodelist[i]->left);
+                        level.push_back(nodelist[i]->left->val);
+                    }                    
+                    if(nodelist[i]->right){
+                        temp.push_back(nodelist[i]->right);
+                        level.push_back(nodelist[i]->right->val);
+                    }
+                }
+            }
+            
+            if(!temp.empty()){result.push_back(level);}
+            nodelist=temp;
+            reversesign*=-1;
+        }
+        
+        return result;
+    }
+};
