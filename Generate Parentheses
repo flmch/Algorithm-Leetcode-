@@ -1,0 +1,37 @@
+void getall(int left, int right, vector<string> &result, string &temp){
+     
+         if(left==0&&right==0){
+             result.push_back(temp);
+             return ;
+         }
+         else{
+            if(left!=0){
+                left--;
+                temp.push_back('(');
+                getall(left,right,result,temp);
+                temp.pop_back();
+                left++;
+            }
+            if(right!=0&&right>left){
+                right--;
+                temp.push_back(')');
+                getall(left,right,result,temp);
+                temp.pop_back();
+                right++;
+            }
+         }
+     
+}
+
+class Solution {
+public:
+    vector<string> generateParenthesis(int n) {
+        int left=n,right=n;
+        string temp;
+        vector<string> result;
+        
+        getall(left,right,result,temp);
+        
+        return result;
+    }
+};
