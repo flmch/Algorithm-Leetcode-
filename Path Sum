@@ -1,0 +1,38 @@
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+ 
+void Preoder(TreeNode *r, int sum, bool &b){
+     if(r->left){r->left->val = r->left->val + r->val;}
+     if(r->right){r->right->val = r->right->val + r->val;}
+      
+      if(r->left){
+          Preoder(r->left,sum,b);
+      }
+      if(r->right){
+          Preoder(r->right,sum,b);
+      }
+      if(!r->left&&!r->right){
+          if(sum==r->val) {b=true;}
+      }
+ }
+ 
+class Solution {
+public:
+    bool hasPathSum(TreeNode *root, int sum) {
+        if(!root){
+            return 0;
+        }else{
+            bool b=false;
+            Preoder(root,sum, b);
+            return b;
+        }
+
+    }
+};
