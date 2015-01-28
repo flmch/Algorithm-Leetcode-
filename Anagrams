@@ -1,0 +1,47 @@
+int hashstring(string st){
+    int result=1;
+    for(int i=0;i<st.size();i++){
+        result*=(st[i]+0);
+    }
+    return result;
+}
+
+bool checkidentical(string a, string b){
+    if(a.size()!=b.size()){
+        return false;
+    }else{
+        bool result=true;
+        sort(a.begin(),a.end());
+        sort(b.begin(),b.end());
+        if(a.compare(b)!=0){
+            result=false;
+        }
+        return result;
+    }
+}
+
+
+class Solution {
+public:
+    vector<string> anagrams(vector<string> &strs) {
+        vector<string> result;
+        unordered_map<int,string> mymap;
+        unordered_map<int,bool> checkuse;
+        for(int i=0;i<strs.size();i++){
+            if(mymap.find(hashstring(strs[i]))==mymap.end()){
+                mymap.insert(pair<int,string>(hashstring(strs[i]),strs[i]));
+                checkuse.insert(pair<int,bool>(hashstring(strs[i]),false));
+            }else{
+                if(checkidentical(strs[i],mymap[hashstring(strs[i])])){
+                    if(!checkuse[hashstring(strs[i])]){
+                        result.push_back(mymap[hashstring(strs[i])]);
+                        checkuse[hashstring(strs[i])]=true;
+                    }
+                    result.push_back(strs[i]);
+                }
+            }
+        }
+        
+        return result;
+    }
+};
