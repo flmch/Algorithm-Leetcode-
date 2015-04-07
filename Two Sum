@@ -1,3 +1,5 @@
+//C++
+
 class Solution {
 public:
     vector<int> twoSum(vector<int> &numbers, int target) {
@@ -15,4 +17,22 @@ public:
                 }
                 return result;
     }
+};
+
+//Javascript
+
+var twoSum = function(numbers, target) {
+    var result = [];
+    var myhash = {};
+    for(var i=0;i<numbers.length;i++){
+        var second = target-numbers[i];
+        if(!(second in myhash)){
+            myhash[numbers[i]] = i;
+        }else{
+            result.push(myhash[second]+1);
+            result.push(i+1);
+            break;
+        }
+    }
+    return result;
 };
