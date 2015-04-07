@@ -1,3 +1,6 @@
+//****************************************************
+//C++
+
 class Solution {
 public:
     int uniquePathsWithObstacles(vector<vector<int> > &obstacleGrid) {
@@ -37,4 +40,55 @@ public:
         
         return arr[m-1][n-1];
     }
+};
+
+//****************************************************
+//Javascript
+
+/**
+ * @param {number[][]} obstacleGrid
+ * @returns {number}
+ */
+var uniquePathsWithObstacles = function(obstacleGrid) {
+    var m = obstacleGrid.length;
+    var n = obstacleGrid[0].length;
+    
+    var dynam = [[]];
+    
+    for(var j=0;j<m;j++){
+        var temp = new Array(n);
+        for(var t=0;t<n;t++){
+            temp[t]=0;
+        }
+        dynam[j] = temp;
+    }
+    
+    
+    for(i=0;i<n;i++){
+        if(obstacleGrid[0][i] === 0){
+            dynam[0][i] = 1;
+        }else{
+            break;
+        }
+    }
+    for(j=0;j<m;j++){
+        if(obstacleGrid[j][0] === 0){
+            dynam[j][0] = 1;
+        }else{
+            break;
+        }
+    } 
+    
+    
+    for(j=1;j<m;j++){
+        for(i=1;i<n;i++){
+            if(obstacleGrid[j][i]==1){
+                dynam[j][i] = 0;
+            }else{
+                dynam[j][i] = dynam[j-1][i] + dynam[j][i-1];
+            }
+        }
+    }
+    
+    return dynam[m-1][n-1];
 };
