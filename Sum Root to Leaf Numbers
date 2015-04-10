@@ -33,3 +33,29 @@ public:
         return sum;
     }
 };
+
+
+//C++ solution 2 (faster)
+ void getSum(TreeNode* head, int &sum, int &total){
+     sum = 10*sum + head->val;
+     if(!head->left&&!head->right){
+         total += sum;
+     }else{
+         if(head->left) getSum(head->left,sum,total);
+         if(head->right) getSum(head->right,sum,total);
+     }
+     sum = (sum - head->val)/10;
+ }
+ 
+class Solution {
+public:
+    int sumNumbers(TreeNode *root) {
+        if(!root){
+            return 0;
+        }else{
+            int sum=0, total=0;
+            getSum(root, sum, total);
+            return total;
+        }
+    }
+};
